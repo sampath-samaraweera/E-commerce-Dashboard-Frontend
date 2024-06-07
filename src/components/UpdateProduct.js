@@ -16,7 +16,7 @@ const UpdateProduct = () => {
 
     const getProductDetails = async () => {
         const id = params.id;
-        let response = await fetch(`http://localhost:5000/product/${id}`,{
+        let response = await fetch(`http://localhost:5000/api/products/product/${id}`,{
             headers:{
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -34,7 +34,7 @@ const UpdateProduct = () => {
         console.log(name, price, category, company );
         const userId = JSON.parse(localStorage.getItem('user'))._id;
         try {
-            let response = await fetch(`http://localhost:5000/product/${params.id}`, {
+            let response = await fetch(`http://localhost:5000/api/products/product/${params.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({ name, price, category, userId, company }),
                 headers: {
