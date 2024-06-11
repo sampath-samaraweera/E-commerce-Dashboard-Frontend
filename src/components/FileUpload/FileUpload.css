@@ -1,0 +1,46 @@
+.uploadContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.img{
+    display: flex;
+    width: 15rem;
+    height: 10rem;
+    margin-top: -3rem;
+    background-color: rgba(255, 255, 255, 0.54);
+    /* border-style: dotted; */
+    border-radius: 6px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.1rem;
+}
+.file{
+    display: block;
+    flex-direction: column;
+}
+
+.file-info{
+    margin-top: 0.2rem;
+    background-color: rgba(130, 130, 130, 0.54);
+    border-radius: 6px;
+    gap: 0.3rem;
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+    flex-direction: row;
+}
+.file-info button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(210, 210, 210);
+    margin-left: 5px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 30px;
+}

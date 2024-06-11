@@ -1,4 +1,33 @@
-
+html, body {
+  margin: 0;
+}
+.app{
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+}
+.content {
+  flex: 1;
+}
+.container{
+  display: block;
+}
+.formContainer{
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  background-color:  rgba(214, 214, 214, 0.638);
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  padding-top: 1rem;
+  border-radius: 10px;
+}
 .nav-ul {
   padding: 5px;
   margin: 0px;
@@ -16,7 +45,6 @@
 .footer {
   position: absolute;
   bottom: 0;
-  background-color: skyblue;
   width: 100%;
   text-align: center;
 }
@@ -48,9 +76,6 @@
   color: #61dafb;
 }
 
-.register, .product{
-  margin-left: 30%;
-}
 .login{
   margin-left: 30%;
   margin-top: 100px;
@@ -90,21 +115,68 @@
   margin-top: -20px;
   margin-left: 20px;
 }
-
 .product-list {
+  font-size: '50px';
   text-align: center;
-  margin-top: 50px;
+  margin-top: 2%;
 }
 
-.product-list ul li {
-  display: inline-block;
-  width: 150px;
-  border: 1px solid skyblue;
-  padding: 5px;
+.productContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  margin: 2%;
+  height: 100%;
 }
 
-.product-list ul{
-  margin: 0;
+.product{
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  margin: 1rem;
+  border:#61dafb;
+  border-radius: 20px;
+  background-color: rgba(214, 214, 214, 0.638);
+  flex-direction: column;
+}
+
+.productRow{
+  display: flex;
+  flex-direction: row;
+}
+.productImage{
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+}
+
+.imgField{
+  margin-top: 2rem;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.inputFieldSet{
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.table{
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-bottom: 5%;
 }
 
 .search-product-box {
@@ -113,6 +185,10 @@
   height: 38px;
   padding-left: 30px;
   border: solid 1px skyblue;
+}
+
+.appBarButton{
+  margin-inline: 20px;
 }
 
 @keyframes App-logo-spin {
