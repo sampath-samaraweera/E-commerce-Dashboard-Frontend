@@ -1,0 +1,201 @@
+html, body {
+  margin: 0;
+}
+.app{
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+}
+.content {
+  flex: 1;
+}
+.container{
+  display: block;
+}
+.formContainer{
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  background-color:  rgba(214, 214, 214, 0.638);
+  padding-left: 3rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  padding-top: 1rem;
+  border-radius: 10px;
+}
+.nav-ul {
+  padding: 5px;
+  margin: 0px;
+  background-color: skyblue;
+}
+.nav-ul li{
+  display:  inline-block;
+  padding: 10px;
+}
+.nav-ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 5px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.login{
+  margin-left: 30%;
+  margin-top: 100px;
+}
+
+.inputBox {
+  padding: 7px;
+  display: block;
+  border: 1px solid skyblue;
+  width: 300px;
+  margin: 20px;
+}
+
+.appButton {
+  margin: 20px;
+  width: 150px;
+  padding: 10px;
+  background-color: skyblue;
+  border: solid 1px;
+  cursor: pointer;
+}
+.nav-right{
+  text-align: right;
+}
+.logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  float: left;
+  margin-top: 3px;
+  margin-left: 10px;
+}
+
+.invalid-input {
+  display: block;
+  color: red;
+  margin-top: -20px;
+  margin-left: 20px;
+}
+.product-list {
+  font-size: '50px';
+  text-align: center;
+  margin-top: 2%;
+}
+
+.productContainer {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  margin: 2%;
+  height: 100%;
+}
+
+.product{
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  margin: 1rem;
+  border:#61dafb;
+  border-radius: 20px;
+  background-color: rgba(214, 214, 214, 0.638);
+  flex-direction: column;
+}
+
+.productRow{
+  display: flex;
+  flex-direction: row;
+}
+.productImage{
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+}
+
+.imgField{
+  margin-top: 2rem;
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.inputFieldSet{
+  margin-left: 3rem;
+  margin-bottom: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+.table{
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-bottom: 5%;
+}
+
+.search-product-box {
+  width: 400px;
+  margin: 20px;
+  height: 38px;
+  padding-left: 30px;
+  border: solid 1px skyblue;
+}
+
+.appBarButton{
+  margin-inline: 20px;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
