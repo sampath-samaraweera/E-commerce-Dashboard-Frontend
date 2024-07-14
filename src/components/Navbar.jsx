@@ -9,14 +9,23 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useNavigate} from 'react-router-dom';
 
 
-
 export default function NavBar() {    
-  const auth = localStorage.getItem('user');
+  const auth = localStorage.getItem('token');
   const navigate = useNavigate();
   const logout = () => {
       localStorage.clear();
       navigate('/signup')
   }
+  const isTokenExpired = (token) => {
+    if (!token) return true;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expiry = payload.exp;
+    const now = Math.floor(Date.now() / 1000); // Current time in seconds
+
+    return now >= expiry;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="transparent">
@@ -33,24 +42,24 @@ export default function NavBar() {
           <Typography variant="h5"  sx={{ padding: '20px' }}>
             Tech Store
           </Typography>
-          {auth?(
+          {auth && !isTokenExpired(auth) ?(
             <Toolbar sx={{ flexGrow: 1 , justifyContent: 'flex-end'}}>
-              <Toolbar class="appBarButton">
-                <Button color="inherit" href="/">Products</Button>
+              <Toolbar className="appBarButton">
+                <Button color="inherit" href="/">Home</Button>
               </Toolbar>
-              <Toolbar class="appBarButton">
-                <Button color="inherit" href="/add">Add Product</Button>
+              <Toolbar className="appBarButton">
+                <Button color="inherit" href="/my_products">My Products</Button>
               </Toolbar>
-              <Toolbar class="appBarButton">
+              <Toolbar className="appBarButton">
                 <Button color="inherit" onClick={logout} >Logout</Button>
               </Toolbar>
             </Toolbar>
           ):(
             <Toolbar sx={{ flexGrow: 1 , justifyContent: 'flex-end'}}>
-              <Toolbar class="appBarButton">
+              <Toolbar className="appBarButton">
                 <Button color="inherit" href="/signup">Signup</Button>
               </Toolbar>
-              <Toolbar class="appBarButton">
+              <Toolbar className="appBarButton">
                 <Button color="inherit" href="/login">Login</Button>
               </Toolbar>
             </Toolbar>

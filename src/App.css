@@ -12,6 +12,15 @@ html, body {
 .container{
   display: block;
 }
+
+.headerRow {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-inline: 50px;
+  margin-block: 20px;
+}
+
 .formContainer{
   display: flex;
   margin-top: 20px;
@@ -171,7 +180,6 @@ html, body {
   justify-content: center;
   flex-direction: column;
 }
-
 
 .table{
   padding-left: 20%;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../components/CustomTextField';
 import CustomLoadingButton from "../components/CustomLoadingButton";
 import FileUploadCom from "../components/FileUpload/FileUploadCom";
+import { BASE_URL } from '../config';
 
 const AddProduct = () => {
     const [name, setName] = useState("");
@@ -28,7 +29,7 @@ const AddProduct = () => {
         }
 
         try {
-            let response = await fetch("http://localhost:5000/api/products/add-product", {
+            let response = await fetch(`${BASE_URL}/products/add-product`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -51,6 +52,8 @@ const AddProduct = () => {
             }
         } catch (error) {
             console.error("There was an error with the fetch operation:", error);
+        }finally{
+            setLoading(false)
         }
     };
 
@@ -59,7 +62,7 @@ const AddProduct = () => {
     };
 
     return (
-        <div class="container">
+        <div className="container">
             <div className="productContainer">
                 <div className="product">
                     <h1>Add Product</h1>
