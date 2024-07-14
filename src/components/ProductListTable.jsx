@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import CustomTable from '../components/CustomTable';
+import CustomTable from './CustomTable';
 import { TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
+import { BASE_URL } from '../config';
 
-const ProductList = () => {
+const ProductListTable = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const ProductList = () => {
     };
 
     const getProducts = async () => {
-        let response = await fetch('http://localhost:5000/api/products/products',{
+        let response = await fetch(`${BASE_URL}/products/products`,{
             headers:{
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -41,7 +42,7 @@ const ProductList = () => {
 
     const deleteProduct = async (id) => {
         console.log(id)
-        let response = await fetch(`http://localhost:5000/api/products/product/${id}`, {
+        let response = await fetch(`${BASE_URL}/products/product/${id}`, {
             method: "Delete",
             headers:{
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -55,7 +56,7 @@ const ProductList = () => {
     const searchHandle = async (event)=>{
         let key = event.target.value;
         if(key){
-            let result = await fetch(`http://localhost:5000/api/products/search/${key}`,{
+            let result = await fetch(`${BASE_URL}/products/search/${key}`,{
                 headers:{
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
                 }
@@ -103,4 +104,4 @@ const ProductList = () => {
     )
 }
 
-export default ProductList;
+export default ProductListTable;

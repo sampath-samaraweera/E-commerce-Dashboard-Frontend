@@ -5,6 +5,7 @@ import CustomLoadingButton from "../components/CustomLoadingButton";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { BASE_URL } from '../config';
 
 
 const SignUp = () => {
@@ -14,18 +15,10 @@ const SignUp = () => {
     const [showPassword, setShowPassword] = React.useState(false);  
     const navigate = useNavigate();
 
-    
-    useEffect(() => {
-        const auth = localStorage.getItem('user');
-        if (auth) {
-            navigate('/');
-        }
-    }, [navigate]);
-
     const collectData = async () => {
         console.log(name, email, password);
         try {
-            let response = await fetch("http://localhost:5000/api/users/register", {
+            let response = await fetch(`${BASE_URL}/users/register`, {
                 method: 'POST',
                 body: JSON.stringify({ name, email, password }),
                 headers: {
