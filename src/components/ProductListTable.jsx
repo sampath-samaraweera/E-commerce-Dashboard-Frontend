@@ -30,7 +30,7 @@ const ProductListTable = () => {
     };
 
     const getProducts = async () => {
-        let response = await fetch(`${BASE_URL}/products/products`,{
+        let response = await fetch(`${BASE_URL}/products/getAll`,{
             headers:{
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
