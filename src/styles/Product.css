@@ -11,20 +11,21 @@
     width: 200px;
     height: 200px;
     object-fit: cover;
+    border-radius: 10px;
   }
   
   .product-name {
     font-size: 18px;
-    margin: 8px 0;
+    margin-bottom: -10px;
   }
   
   .product-price {
     color: #888;
-    margin: 8px 0;
+    margin-bottom: 15px;
   }
   
   .product-button {
-    background-color: #28a745;
+    background-color:  #218838;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -33,5 +34,5 @@
   }
   
   .product-button:hover {
-    background-color: #218838;
+    background-color: #8d8d8d;
   }

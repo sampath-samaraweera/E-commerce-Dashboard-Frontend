@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, CircularProgress } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import {  CircularProgress } from '@mui/material';
 import ProductList from '../components/ProductList';
 import { BASE_URL } from '../config';
+import ImageSlider from '../components/ImageSlider';
+import { useCustomContext } from '../context/CustomContext';
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
+    const {products, setProducts, cart} = useCustomContext()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
+    console.log('cart is home', cart)
     useEffect(() => {
         const auth = localStorage.getItem('token');
         console.log('token is ', auth);
@@ -34,7 +35,7 @@ const Home = () => {
         setLoading(true);
         console.log('fething products')
         try {
-            const response = await fetch(`${BASE_URL}/products/products`, {
+            const response = await fetch(`${BASE_URL}/products/getAll`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -55,61 +56,11 @@ const Home = () => {
         }
     };
 
-    const searchHandle = async (event) => {
-        const key = event.target.value;
-        if (key) {
-            setLoading(true);
-            try {
-                const response = await fetch(`${BASE_URL}/products/search/${key}`, {
-                    headers: {
-                        "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                if (result) {
-                    setProducts(result.data);
-                }
-            } catch (error) {
-                console.error('Failed to search products:', error);
-            } finally {
-                setLoading(false);
-            }
-        } else {
-            getProducts();
-        }
-    };
-
     return (
         <div className="content">
-            <div className="headerRow">
-                <span style={{ fontSize: "25px" }}>Product List</span>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                    <Search />
-                    <TextField
-                        sx={{
-                            width: '25rem',
-                            marginBottom: '15px',
-                            '& .MuiOutlinedInput-root': {
-                                '&.Mui-focused fieldset': {
-                                    borderColor: 'red', // border color when focused
-                                },
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: 'red', // label color when focused
-                            },
-                        }}
-                        size="small"
-                        type="search"
-                        variant="standard"
-                        label="Search Product"
-                        onChange={searchHandle}
-                    />
-                </div>
+            <ImageSlider/>
+            <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+                <span style={{ fontSize: "25px" }}>Products</span>
             </div>
             <div>
                 {loading ? (

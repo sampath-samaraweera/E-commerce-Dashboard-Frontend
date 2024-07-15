@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { TextField, CircularProgress } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 import MyProductList from '../components/MyProductList';
 import { BASE_URL } from '../config';
 import CustomButton from "../components/CustomButton";
+import SearchBar from '../components/SearchBar';
 
 const MyProducts = () => {
     const [products, setProducts] = useState([]);
@@ -34,7 +34,7 @@ const MyProducts = () => {
     const getProducts = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${BASE_URL}/products/products`, {
+            const response = await fetch(`${BASE_URL}/products/getAll`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -87,28 +87,7 @@ const MyProducts = () => {
         <div className="content">
             <div className="headerRow">
                 <span style={{ fontSize: "25px" }}>My Product List</span>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                    <Search />
-                    <TextField
-                        sx={{
-                            width: '25rem',
-                            marginBottom: '15px',
-                            '& .MuiOutlinedInput-root': {
-                                '&.Mui-focused fieldset': {
-                                    borderColor: 'red', // border color when focused
-                                },
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: 'red', // label color when focused
-                            },
-                        }}
-                        size="small"
-                        type="search"
-                        variant="standard"
-                        label="Search Product"
-                        onChange={searchHandle}
-                    />
-                </div>
+                <SearchBar onSearch={searchHandle}/>
                 <div style={{ margin: "10px" }}>
                     <CustomButton size="small" color="green" onClick={() =>  navigate('/add_my_product')}>Add Product</CustomButton>
                 </div>

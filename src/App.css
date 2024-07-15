@@ -18,7 +18,12 @@ html, body {
   align-items: center;
   justify-content: space-between;
   margin-inline: 50px;
-  margin-block: 20px;
+  margin-block: 15px;
+}
+
+.tabBar {
+  display:flex;
+  background-color:#ffc800 ;
 }
 
 .formContainer{
@@ -98,14 +103,6 @@ html, body {
   margin: 20px;
 }
 
-.appButton {
-  margin: 20px;
-  width: 150px;
-  padding: 10px;
-  background-color: skyblue;
-  border: solid 1px;
-  cursor: pointer;
-}
 .nav-right{
   text-align: right;
 }
@@ -196,7 +193,6 @@ html, body {
 }
 
 .appBarButton{
-  margin-inline: 20px;
 }
 
 @keyframes App-logo-spin {
