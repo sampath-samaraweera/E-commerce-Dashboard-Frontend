@@ -8,7 +8,7 @@ const CustomLoadingButton = ({ children, onClick, size, color,loading,  ...props
       backgroundColor: color, // default background color
       color: 'white', // default text color
       '&:hover': {
-        backgroundColor: 'darkred', // background color on hover
+        backgroundColor: 'gray', // background color on hover
       }, // add some margin top
     }}
     size={size}

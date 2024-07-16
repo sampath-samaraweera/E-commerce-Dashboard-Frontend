@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../components/CustomTextField';
+import CustomMultilineTextField from '../components/CustomMultilineTextField';
 import CustomLoadingButton from "../components/CustomLoadingButton";
 import FileUploadCom from "../components/FileUpload/FileUploadCom";
 import { BASE_URL } from '../config';
@@ -10,9 +11,27 @@ const AddProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
+    const [description, setDescription] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    
+    useEffect(() => {        
+        const auth = localStorage.getItem('token');
+        if (!auth && isTokenExpired(auth)) {
+            navigate("/login");
+        }
+    }, []);
+
+    const isTokenExpired = (token) => {
+        if (!token) return true;
+    
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expiry = payload.exp;
+        const now = Math.floor(Date.now() / 1000); // Current time in seconds
+    
+        return now >= expiry;
+    };
 
     const handleAddProduct = async () => {
         setLoading(true);
@@ -24,10 +43,10 @@ const AddProduct = () => {
         formData.append('category', category);
         formData.append('company', company);
         formData.append('userId', userId);
+        formData.append('description', description);
         if (selectedFile) {
             formData.append('image', selectedFile);
         }
-
         try {
             let response = await fetch(`${BASE_URL}/products/add-product`, {
                 method: 'POST',
@@ -46,7 +65,7 @@ const AddProduct = () => {
 
             if (result.success) {
                 setLoading(false);
-                navigate('/');
+                navigate('/my_products');
             } else {
                 throw new Error("Invalid response structure");
             }
@@ -86,6 +105,10 @@ const AddProduct = () => {
                             <CustomTextField
                                 label="Enter Category"
                                 value={category} onChange={(e) => setCategory(e.target.value)}
+                            />
+                            <CustomMultilineTextField
+                                label="Enter Description"
+                                value={description} onChange={(e) => setDescription(e.target.value)}
                             />
                             <div style={{ marginTop: '2rem' }}>
                                <CustomLoadingButton size="medium" color="darkred" onClick={handleAddProduct} loading={loading}>Add Product</CustomLoadingButton>

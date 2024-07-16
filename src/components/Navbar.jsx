@@ -73,35 +73,35 @@ export default function NavBar() {
             </Typography>
           </Box>
           {auth && !isTokenExpired(auth) ? (
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               {location.pathname === '/' && (
                 <Toolbar className="appBarButton">
                   <SearchBar onSearch={searchHandle} />
                 </Toolbar>
               )}
-              <Toolbar className="appBarButton">
-                <Button color="inherit" component={Link} to="/">Home</Button>
-              </Toolbar>
-              <Toolbar className="appBarButton">
-                <Button color="inherit" component={Link} to="/my_products">My Products</Button>
-              </Toolbar>
-              <Toolbar className="appBarButton">
-                <Button color="inherit" component={Link} to="/cart">
+              <div className="appBarButton">
+                <button className="navButton"  onClick={() => navigate("/")}>Home</button>
+              </div>
+              <div className="appBarButton">
+                <button className="navButton"  onClick={() => navigate("/my_products")}>My Products</button>
+              </div>
+              <div className="appBarButton">
+                <button className="navButton" onClick={logout}>Logout</button>
+              </div>
+              <div className="appBarButton">
+                <button className="navButton" onClick={() => navigate('/cart')}>
                    <ShoppingCartIcon/>
-                </Button>
-              </Toolbar>
-              <Toolbar className="appBarButton">
-                <Button color="inherit" onClick={logout}>Logout</Button>
-              </Toolbar>
+                </button>
+              </div>
             </Box>
           ) : (
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-              <Toolbar className="appBarButton">
-                <Button color="inherit" component={Link} to="/signup">Signup</Button>
-              </Toolbar>
-              <Toolbar className="appBarButton">
-                <Button color="inherit" component={Link} to="/login">Login</Button>
-              </Toolbar>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <div className="appBarButton">
+                <button className="navButton" onClick={() => navigate('/signup')}>Signup</button>
+              </div>
+              <div className="appBarButton">
+                <button className="navButton" onClick={() => navigate('/login')}>Login</button>
+              </div>
             </Box>
           )}
         </Box>

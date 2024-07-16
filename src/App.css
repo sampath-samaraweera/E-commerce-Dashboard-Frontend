@@ -23,7 +23,8 @@ html, body {
 
 .tabBar {
   display:flex;
-  background-color:#ffc800 ;
+  align-items: center;
+  /* background-color:#ffc800 ; */
 }
 
 .formContainer{
@@ -122,7 +123,7 @@ html, body {
   margin-left: 20px;
 }
 .product-list {
-  font-size: '50px';
+  font-size: 20px;
   text-align: center;
   margin-top: 2%;
 }
@@ -193,6 +194,17 @@ html, body {
 }
 
 .appBarButton{
+  margin-inline: 8px;
+}
+
+.navButton{
+  background-color: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-block: 12px;
 }
 
 @keyframes App-logo-spin {
