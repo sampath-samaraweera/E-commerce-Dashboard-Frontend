@@ -60,6 +60,31 @@ const Login = () => {
         }
     }
 
+    const handleGoogleLogin = async() => {
+        window.open("http://localhost:5000/auth/google", "_self");
+    };
+    
+    const handleNavigate = () => {
+        console.log("Navigating to home1");
+        // navigate('/'); 
+    };
+    
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        console.log("URL Params:", urlParams);
+        console.log("Token:", token);
+        if (token) {
+            localStorage.setItem("token", token);
+            console.log("Token saved to localStorage:", token);
+            handleNavigate()
+            console.log("Navigating to home");
+        }else{
+            console.log("Navigating to login");
+            navigate('/login');
+        }
+    }, [navigate]); 
+
     return (
         <div className="formContainer">
             <div className="form">

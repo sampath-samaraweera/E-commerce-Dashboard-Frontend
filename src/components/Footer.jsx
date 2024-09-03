@@ -1,28 +1,24 @@
-import React,{useEffect} from 'react';
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+export default function Footer() {    
 
-export default function Footer() {
-
-    const auth = localStorage.getItem('token');
-
-    return (
-        <div className="footer">
-            {auth?(
-                <Box >
-                <AppBar position="static" color="transparent">
-                    <Toolbar sx={{alignSelf: 'center'}}>
-                    <Typography variant="h5"  sx={{display:"block", padding: '20px' }}>
-                        Tech Store
-                    </Typography>
-                    </Toolbar>
-                </AppBar>
-                </Box>
-            ):(null)}
-
-        </div>
-    );
+  return (
+    <div className='footer'>
+        <Box sx={{ display: 'flex', flexDirection: 'column',alignItems: 'center', marginInline: 3, padding: '30px'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Typography variant="h5" sx={{ paddingLeft: '10px' }}>
+              Tech Store
+            </Typography>
+          </Box>          
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Typography variant="h7" sx={{ paddingLeft: '10px' }}>
+              Powered By Google
+            </Typography>
+          </Box>
+        </Box>
+    </div>
+  );
 }

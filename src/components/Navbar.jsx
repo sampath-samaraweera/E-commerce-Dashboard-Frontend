@@ -20,7 +20,7 @@ export default function NavBar() {
 
   const logout = () => {
     localStorage.clear();
-    navigate('/signup');
+    navigate('/login');
   };
 
   const isTokenExpired = (token) => {
@@ -30,30 +30,33 @@ export default function NavBar() {
     const now = Math.floor(Date.now() / 1000); // Current time in seconds
     return now >= expiry;
   };
-  
+  // console.log('auth', auth )
+  // console.log('expire', isTokenExpired(auth) )
   const searchHandle = async (event) => {
     const key = event.target.value;
     if (key) {
         try {
-            const response = await fetch(`${BASE_URL}/products/search/${key}`, {
-                headers: {
-                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-                }
-            });
+          const response = await fetch(`${BASE_URL}/products/search/${key}`, {
+              headers: {
+                  "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+              }
+          });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
 
-            const result = await response.json();
-            if (result) {
-                setProducts(result.data);
-            }
+          const result = await response.json();
+          if (result) {
+              setProducts(result.data);
+          }
         } catch (error) {
             console.error('Failed to search products:', error);
         }
     }
   };
+
+  
 
   return (
     <Box className='tabBar'>

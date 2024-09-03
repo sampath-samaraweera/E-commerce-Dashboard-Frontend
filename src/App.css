@@ -1,16 +1,15 @@
-html, body {
+html, body {  
+  height: 100%;
   margin: 0;
 }
 .app{
   display: flex;
   flex-direction: column;
-  min-height: 50vh;
-}
-.content {
-  flex: 1;
+  min-height: 100vh
 }
 .container{
   display: block;
+  /* background-color:  rgba(223, 12, 12, 0.638); */
 }
 
 .headerRow {
@@ -22,16 +21,19 @@ html, body {
 }
 
 .tabBar {
-  display:flex;
-  align-items: center;
-  /* background-color:#ffc800 ; */
+  /* background-color: red; */
+}
+.footer{
+  margin-top: auto;
 }
 
 .formContainer{
   display: flex;
-  margin-top: 20px;
-  justify-content: center;
+  flex: 1;
   align-items: center;
+  flex-direction: column;
+  margin: 2%;
+  height: 100%;
 }
 .form{
   display: flex;
@@ -56,12 +58,6 @@ html, body {
   color: #fff;
   text-decoration: none;
   padding: 5px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
 }
 
 .App-logo {
@@ -142,7 +138,6 @@ html, body {
   align-items: center;
   padding: 2rem;
   margin: 1rem;
-  border:#61dafb;
   border-radius: 20px;
   background-color: rgba(214, 214, 214, 0.638);
   flex-direction: column;

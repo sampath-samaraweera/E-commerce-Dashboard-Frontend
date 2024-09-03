@@ -92,10 +92,9 @@ const UpdateProduct = () => {
     };
 
     return (
-        <div className="container">
             <div className="productContainer">
                 <div className="product">
-                    <h1>Add Product</h1>
+                    <h1>Update Product</h1>
                     <div className="productRow">
                         {image ? (  
                             <div className="imgField">    
@@ -143,7 +142,6 @@ const UpdateProduct = () => {
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
 

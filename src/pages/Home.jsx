@@ -10,16 +10,19 @@ const Home = () => {
     const {products, setProducts} = useCustomContext()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
     useEffect(() => {
         const auth = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
         console.log('token is ', auth);
+        console.log('ex is ', isTokenExpired(auth));
+        getProducts()
         if (auth && !isTokenExpired(auth)) {
             getProducts();
         } else {
             navigate("/login");
         }
-    }, []);
+    }, [navigate]);
+    
 
     const isTokenExpired = (token) => {
         if (!token) return true;

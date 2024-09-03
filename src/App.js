@@ -16,7 +16,6 @@ import Cart from './pages/Cart';
 function App() {
   return (
     <div className="app">
-      <div className="content">
         <CustomProvider>
           <BrowserRouter >
             <NavBar />
@@ -31,14 +30,13 @@ function App() {
                 {/* <Route path="/" element={<h1>Profile Component</h1>} /> */}
               </Route>
               
-              <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
 
             </Routes>
+            <Footer />
           </BrowserRouter>
         </CustomProvider>
-      </div>
-     {/* <Footer /> */}
     </div>
   );
 }
