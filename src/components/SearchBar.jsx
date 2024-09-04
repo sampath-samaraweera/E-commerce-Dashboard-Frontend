@@ -14,11 +14,13 @@ const SearchBar = ({ onSearch }) => {
                 display: "flex", 
                 alignItems: "center", 
                 justifyContent: "center" ,
-                backgroundColor: "white",
+                backgroundColor: "#ECF0F1", 
                 borderRadius: "25px",
                 paddingBlock: "3px",
                 paddingInline: "15px",
-            }}
+                border: "1px solid #2C3E50",
+                maxWidth: "500px",
+             }}
             noValidate
             autoComplete="off"
         >

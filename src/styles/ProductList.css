@@ -1,7 +1,7 @@
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     margin-inline: 30px;
     gap: 50px;
   }

@@ -1,9 +1,7 @@
 import React from 'react';
 import '../styles/CartItem.css';
-import { useCustomContext } from '../context/CustomContext';
 
-const CartItem = ({product}) => {
-  const { removeFromCart } = useCustomContext()
+const CartItem = ({key, product, onRemove}) => {
 
   return (
       <div className="item-container">
@@ -15,7 +13,7 @@ const CartItem = ({product}) => {
           <span className="item-price">Rs. {product.price}</span>
           <span className="item-qty">Qty - {product.quantity}</span>
           <div style={{display: 'flex', flexDirection: 'column', paddingTop: '10px', alignItems: 'end'}}>
-            <button className="item-button" onClick={() => removeFromCart(product._id)}>Remove</button>
+            <button className="item-button" onClick={() => onRemove()}>Remove</button>
           </div>
       </div>
   );

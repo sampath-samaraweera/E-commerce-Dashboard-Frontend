@@ -14,6 +14,7 @@
     justify-content: center;
     align-items: center;
     padding: 0.1rem;
+    gap: 4,
 }
 .file{
     display: block;
@@ -21,7 +22,7 @@
 }
 
 .file-info{
-    margin-top: 0.2rem;
+    margin-top: 80px;
     background-color: rgba(130, 130, 130, 0.54);
     border-radius: 6px;
     gap: 0.3rem;
@@ -37,7 +38,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(210, 210, 210);
+    background-color: #E74C3C;
+    color: #ECF0F1;
     margin-left: 5px;
     width: 25px;
     height: 25px;

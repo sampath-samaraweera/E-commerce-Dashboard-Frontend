@@ -1,16 +1,17 @@
 import React from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-const CustomLoadingButton = ({ children, onClick, size, color, loading, width, ...props }) => {
+const OutlinedLoadingButton = ({ children, onClick, size, color,borderColor, loading, width, ...props }) => {
   return (
     <LoadingButton 
       sx={{
         width: width || 'auto',
         textTransform: 'none',
-        backgroundColor: color, // Primary color (Mint Green)
-        color: '#FFFFFF', // White text
+        borderColor: borderColor || 'black',
+        color: color || 'black',
         '&:hover': {
-          backgroundColor: '#2C3E50', // Midnight Blue on hover
+          backgroundColor: '#2C3E50',
+          color: 'white',
         },
         borderRadius: '4px',
         padding: '8px 16px',
@@ -20,11 +21,11 @@ const CustomLoadingButton = ({ children, onClick, size, color, loading, width, .
       onClick={onClick}
       loading={loading}
       loadingPosition="center"
-      variant="contained"
+      variant="outlined"
     >
       {children}
     </LoadingButton>
   );
 };
 
-export default CustomLoadingButton;
+export default OutlinedLoadingButton;

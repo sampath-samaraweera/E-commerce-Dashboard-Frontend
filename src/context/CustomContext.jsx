@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CustomContext = createContext();
 
@@ -21,12 +21,19 @@ export const CustomProvider = ({ children }) => {
     console.log('Added products', cart);
   };
 
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((product) => product._id !== productId));
-  };
-
   const clearCart = () => {
     setCart([]);
+  };
+
+  const updateCartItemQuantity = (id, quantity) => {
+    setCart(prevCart => {
+        if (quantity <= 0) {
+            return prevCart.filter(item => item._id !== id);
+        }
+        return prevCart.map(item => 
+            item._id === id ? { ...item, quantity } : item
+        );
+    });
   };
 
   return (
@@ -37,7 +44,7 @@ export const CustomProvider = ({ children }) => {
         cart,
         addToCart,
         setCart,
-        removeFromCart,
+        updateCartItemQuantity,
         clearCart
       }}
     >

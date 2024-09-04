@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import CustomTextField from '../components/CustomTextField';
+import CustomMultilineTextField from '../components/CustomMultilineTextField';
 import CustomLoadingButton from "../components/CustomLoadingButton";
 import FileUploadCom from "../components/FileUpload/FileUploadCom";
 import { BASE_URL } from '../config';
@@ -10,9 +11,27 @@ const AddProduct = () => {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [company, setCompany] = useState("");
+    const [description, setDescription] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    
+    useEffect(() => {        
+        const auth = localStorage.getItem('token');
+        if (!auth && isTokenExpired(auth)) {
+            navigate("/login");
+        }
+    }, []);
+
+    const isTokenExpired = (token) => {
+        if (!token) return true;
+    
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expiry = payload.exp;
+        const now = Math.floor(Date.now() / 1000); // Current time in seconds
+    
+        return now >= expiry;
+    };
 
     const handleAddProduct = async () => {
         setLoading(true);
@@ -24,11 +43,20 @@ const AddProduct = () => {
         formData.append('category', category);
         formData.append('company', company);
         formData.append('userId', userId);
+        formData.append('description', description);
         if (selectedFile) {
             formData.append('image', selectedFile);
         }
-
-        try {
+        try {            
+            if(!category) {
+                alert("Please select Category")
+            }else if(!company) {
+                alert("Please select Company")
+            }else if(!name) {
+                alert("Please select Product Name")
+            }else if(!price) {
+                alert("Please enter price")
+            }
             let response = await fetch(`${BASE_URL}/products/add-product`, {
                 method: 'POST',
                 body: formData,
@@ -46,7 +74,7 @@ const AddProduct = () => {
 
             if (result.success) {
                 setLoading(false);
-                navigate('/');
+                navigate('/my_products');
             } else {
                 throw new Error("Invalid response structure");
             }
@@ -62,15 +90,19 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container" style={{marginBottom: '50px'}}>
             <div className="productContainer">
                 <div className="product">
-                    <h1>Add Product</h1>
+                    <h1 style={{fontSize: '30px'}}>Add Product</h1>
                     <div className="productRow">
                         <div className="imgField">
                             <FileUploadCom onFileUpload={handleFileChange} />
                         </div>
                         <div className="inputFieldSet">
+                            <CustomTextField
+                                label="Enter Category"
+                                value={category} onChange={(e) => setCategory(e.target.value)}
+                            />
                             <CustomTextField
                                 label="Enter Company Name"
                                 value={company} onChange={(e) => setCompany(e.target.value)}
@@ -83,12 +115,12 @@ const AddProduct = () => {
                                 label="Enter Price"
                                 value={price} onChange={(e) => setPrice(e.target.value)}
                             />
-                            <CustomTextField
-                                label="Enter Category"
-                                value={category} onChange={(e) => setCategory(e.target.value)}
+                            <CustomMultilineTextField
+                                label="Enter Description"
+                                value={description} onChange={(e) => setDescription(e.target.value)}
                             />
                             <div style={{ marginTop: '2rem' }}>
-                               <CustomLoadingButton size="medium" color="darkred" onClick={handleAddProduct} loading={loading}>Add Product</CustomLoadingButton>
+                               <CustomLoadingButton size="medium" color= 'green' onClick={handleAddProduct} loading={loading}>Add Product</CustomLoadingButton>
                             </div>
                         </div>
                     </div>

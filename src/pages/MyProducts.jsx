@@ -9,13 +9,12 @@ import SearchBar from '../components/SearchBar';
 const MyProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const auth = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const auth = localStorage.getItem('token');
-        console.log('token is ', auth);
+    useEffect(() => {        
         if (auth && !isTokenExpired(auth)) {
-            getProducts();
+            getMyProducts();
         } else {
             navigate("/login");
         }
@@ -31,10 +30,13 @@ const MyProducts = () => {
         return now >= expiry;
     };
 
-    const getProducts = async () => {
+    const getMyProducts = async () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log("user is",user);
+        console.log("user id is",user._id);
         setLoading(true);
         try {
-            const response = await fetch(`${BASE_URL}/products/getAll`, {
+            const response = await fetch(`${BASE_URL}/products/myProduct/${user._id}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -46,6 +48,7 @@ const MyProducts = () => {
             }
 
             const result = await response.json();
+            console.log(result)
             setProducts(result.data);
         } catch (error) {
             console.error('Failed to fetch products:', error);
@@ -79,14 +82,14 @@ const MyProducts = () => {
                 setLoading(false);
             }
         } else {
-            getProducts();
+            getMyProducts();
         }
     };
 
     return (
         <div className="content">
             <div className="headerRow">
-                <span style={{ fontSize: "25px" }}>My Product List</span>
+                <span style={{ fontSize: "25px", paddingLeft:'50px' }}>My Product List</span>
                 <SearchBar onSearch={searchHandle}/>
                 <div style={{ margin: "10px" }}>
                     <CustomButton size="small" color="green" onClick={() =>  navigate('/add_my_product')}>Add Product</CustomButton>
@@ -98,7 +101,13 @@ const MyProducts = () => {
                         <CircularProgress />
                     </div>
                 ) : (
-                    <MyProductList products={products} getProducts={getProducts} />
+                    products.length === 0 ?(
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <p style={{ fontSize: "23px", marginTop: '10px' }}>No products found.</p>
+                        </div>
+                    ):(
+                        <MyProductList products={products} getMyProducts={getMyProducts} />
+                    )
                 )}
             </div>
         </div>

@@ -6,11 +6,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { BASE_URL } from '../config';
+import '../styles/Login.css';
+import OutlinedLoadingButton from '../components/OutlinedLoadingButton';
+import { Google } from '@mui/icons-material';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
 
@@ -33,59 +35,63 @@ const Login = () => {
 
     const handleLogin = async () => {
         setLoading(true);
-        try{
-            let response = await fetch(`${BASE_URL}/users/login`, {
-                method: 'post',
-                body: JSON.stringify({ email, password }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log(email, password)
-            let result = await response.json();
-            console.log(result)
-            if (result.auth && result.data) {
-                console.log(result.data)
-                localStorage.setItem('user', JSON.stringify(result.data));
-                localStorage.setItem('token', JSON.stringify(result.auth));
-                navigate("/")
+        try {
+            if (!email) {
+                alert("Please enter your email")
+            } else if (!password) {
+                alert("Please enter your password")
             } else {
-                alert("Login details incorrect.")
+                let response = await fetch(`${BASE_URL}/users/login`, {
+                    method: 'post',
+                    body: JSON.stringify({ email, password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                let result = await response.json();
+                if (result.auth && result.data) {
+                    localStorage.setItem('user', JSON.stringify(result.data));
+                    localStorage.setItem('token', JSON.stringify(result.auth));
+                    navigate("/")
+                } else {
+                    alert("Login details incorrect.")
+                }
             }
-        }
-        catch(error){
+
+        } catch (error) {
             console.error("Fetching Error", error);
-        }
-        finally{
+        } finally {
             setLoading(false);
         }
     }
 
+    const handleGoogleLogin = async () => {
+        window.open("http://localhost:5000/auth/google", "_self");
+    };
+    
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            localStorage.setItem("token", JSON.stringify(token));
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const user = { _id: payload.id }
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate('/');
+        }
+    }, [navigate]); 
+
     return (
         <div className="formContainer">
             <div className="form">
-                <h1>Login</h1>
-                <div style={{  display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column'}}
-                >
+                <h1>LogIn</h1>
+                <div className="form-fields">
                     <CustomTextField
                         label="Enter Email"
                         value={email} onChange={(e) => setEmail(e.target.value)}
                     />
-                    <FormControl sx={{
-                            width: '25rem',
-                            marginTop: '1rem',
-                            '& .MuiOutlinedInput-root': {
-                                '&.Mui-focused fieldset': {
-                                    borderColor: 'red', // border color when focused
-                                },
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: 'red', // label color when focused
-                            },
-                        }} 
+                    <FormControl 
+                        className="password-field" 
                         variant="outlined" 
                         size="small" 
                         value={password} 
@@ -99,12 +105,28 @@ const Login = () => {
                         />
                     </FormControl>
                 </div>
-                <div style={{ marginTop: '2rem' }}>
-                    <CustomLoadingButton size="medium" color="darkred" onClick={handleLogin} loading={loading}>Login</CustomLoadingButton>
+                <div className="form-actions">
+                    <CustomLoadingButton 
+                        size="medium" 
+                        color='#18BC9C'
+                        onClick={handleLogin} 
+                        loading={loading} 
+                        width='200px'
+                    >
+                        LogIn
+                    </CustomLoadingButton>
+                    <OutlinedLoadingButton 
+                        size="medium" 
+                        color="#2C3E50" 
+                        onClick={handleGoogleLogin} 
+                        width='200px'
+                    >
+                       <Google/>&nbsp;LogIn with Google
+                    </OutlinedLoadingButton>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Login
+export default Login;

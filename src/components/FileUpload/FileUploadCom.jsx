@@ -54,7 +54,7 @@ const FileUploadCom = ({ onFileUpload }) => {
                 <div className="file-info">
                     <Description />
                     <span>{selectedFile.name}</span>
-                    <button style={{ fontSize: '8px', cursor: 'pointer' }} onClick={clearFileInput}>
+                    <button style={{ fontSize: '8px', cursor: 'pointer',marginTop: '0px' }} onClick={clearFileInput}>
                         <Close />
                     </button>
                 </div>

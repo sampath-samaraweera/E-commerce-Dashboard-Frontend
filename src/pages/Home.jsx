@@ -7,19 +7,17 @@ import ImageSlider from '../components/ImageSlider';
 import { useCustomContext } from '../context/CustomContext';
 
 const Home = () => {
-    const {products, setProducts, cart} = useCustomContext()
+    const {products, setProducts} = useCustomContext()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    console.log('cart is home', cart)
+
     useEffect(() => {
         const auth = localStorage.getItem('token');
         console.log('token is ', auth);
-        if (auth && !isTokenExpired(auth)) {
-            getProducts();
-        } else {
-            navigate("/login");
-        }
+        console.log('ex is ', isTokenExpired(auth));
+        getProducts()
     }, []);
+    
 
     const isTokenExpired = (token) => {
         if (!token) return true;
@@ -38,7 +36,7 @@ const Home = () => {
             const response = await fetch(`${BASE_URL}/products/getAll`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+                    // "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
                 }
             });
 
@@ -57,7 +55,7 @@ const Home = () => {
     };
 
     return (
-        <div className="content">
+        <div className="content" style={{marginBottom: '100px'}}>
             <ImageSlider/>
             <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
                 <span style={{ fontSize: "25px" }}>Products</span>

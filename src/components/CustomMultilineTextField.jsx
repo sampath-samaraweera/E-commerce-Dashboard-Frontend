@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 
-const CustomTextField = ({ label, value, onChange }) => {
+const CustomMultilineTextField = ({ label, value, onChange }) => {
   return (
     <TextField
       sx={{
@@ -20,9 +20,10 @@ const CustomTextField = ({ label, value, onChange }) => {
       variant="outlined"
       label={label}
       value={value}
+      multiline
       onChange={onChange}
     />
   );
 };
 
-export default CustomTextField;
+export default CustomMultilineTextField;

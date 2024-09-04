@@ -11,34 +11,33 @@ import NavBar from './components/Navbar';
 import MyProducts from './pages/MyProducts'
 import { CustomProvider } from './context/CustomContext';
 import Cart from './pages/Cart';
+import ProductDetails from './pages/ProductDetails';
 
 
 function App() {
   return (
     <div className="app">
-      <div className="content">
         <CustomProvider>
           <BrowserRouter >
             <NavBar />
             <Routes>
               <Route element={<PrivateComponent />}>
-                <Route path="/" element={<Home />} />
                 <Route path="/my_products" element={<MyProducts />} />
-                <Route path="/cart" element={<Cart />} />
                 <Route path="/add_my_product" element={<AddProduct />} />
                 <Route path="/update/:id" element={<UpdateProduct />} />
-                <Route path="/logout" element={<h1> Logout Component</h1>} />
                 {/* <Route path="/" element={<h1>Profile Component</h1>} /> */}
               </Route>
               
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
 
             </Routes>
+            <Footer />
           </BrowserRouter>
         </CustomProvider>
-      </div>
-     {/* <Footer /> */}
     </div>
   );
 }
