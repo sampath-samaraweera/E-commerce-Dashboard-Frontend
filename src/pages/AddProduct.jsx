@@ -47,7 +47,16 @@ const AddProduct = () => {
         if (selectedFile) {
             formData.append('image', selectedFile);
         }
-        try {
+        try {            
+            if(!category) {
+                alert("Please select Category")
+            }else if(!company) {
+                alert("Please select Company")
+            }else if(!name) {
+                alert("Please select Product Name")
+            }else if(!price) {
+                alert("Please enter price")
+            }
             let response = await fetch(`${BASE_URL}/products/add-product`, {
                 method: 'POST',
                 body: formData,
@@ -81,15 +90,19 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container" style={{marginBottom: '50px'}}>
             <div className="productContainer">
                 <div className="product">
-                    <h1>Add Product</h1>
+                    <h1 style={{fontSize: '30px'}}>Add Product</h1>
                     <div className="productRow">
                         <div className="imgField">
                             <FileUploadCom onFileUpload={handleFileChange} />
                         </div>
                         <div className="inputFieldSet">
+                            <CustomTextField
+                                label="Enter Category"
+                                value={category} onChange={(e) => setCategory(e.target.value)}
+                            />
                             <CustomTextField
                                 label="Enter Company Name"
                                 value={company} onChange={(e) => setCompany(e.target.value)}
@@ -102,16 +115,12 @@ const AddProduct = () => {
                                 label="Enter Price"
                                 value={price} onChange={(e) => setPrice(e.target.value)}
                             />
-                            <CustomTextField
-                                label="Enter Category"
-                                value={category} onChange={(e) => setCategory(e.target.value)}
-                            />
                             <CustomMultilineTextField
                                 label="Enter Description"
                                 value={description} onChange={(e) => setDescription(e.target.value)}
                             />
                             <div style={{ marginTop: '2rem' }}>
-                               <CustomLoadingButton size="medium" color="darkred" onClick={handleAddProduct} loading={loading}>Add Product</CustomLoadingButton>
+                               <CustomLoadingButton size="medium" color= 'green' onClick={handleAddProduct} loading={loading}>Add Product</CustomLoadingButton>
                             </div>
                         </div>
                     </div>

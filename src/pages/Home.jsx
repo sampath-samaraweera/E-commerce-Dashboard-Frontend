@@ -16,12 +16,7 @@ const Home = () => {
         console.log('token is ', auth);
         console.log('ex is ', isTokenExpired(auth));
         getProducts()
-        if (auth && !isTokenExpired(auth)) {
-            getProducts();
-        } else {
-            navigate("/login");
-        }
-    }, [navigate]);
+    }, []);
     
 
     const isTokenExpired = (token) => {
@@ -41,7 +36,7 @@ const Home = () => {
             const response = await fetch(`${BASE_URL}/products/getAll`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+                    // "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
                 }
             });
 
@@ -60,7 +55,7 @@ const Home = () => {
     };
 
     return (
-        <div className="content">
+        <div className="content" style={{marginBottom: '100px'}}>
             <ImageSlider/>
             <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
                 <span style={{ fontSize: "25px" }}>Products</span>

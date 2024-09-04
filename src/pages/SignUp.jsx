@@ -6,6 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { BASE_URL } from '../config';
+import '../styles/Login.css';
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -17,26 +18,34 @@ const SignUp = () => {
     const collectData = async () => {
         console.log(name, email, password);
         try {
-            let response = await fetch(`${BASE_URL}/users/register`, {
-                method: 'POST',
-                body: JSON.stringify({ name, email, password }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            let result = await response.json();
-            console.log(result);
-            if (result.auth && result.data) {
-                localStorage.setItem("user", JSON.stringify(result.data));
-                localStorage.setItem("token", JSON.stringify(result.auth));
-                navigate('/');
+            if (!name) {
+                alert("Please enter your name")
+            } else if (!email) {
+                alert("Please enter your email")
+            } else if (!password) {
+                alert("Please enter your password")
             } else {
-                throw new Error("Invalid response structure");
+                let response = await fetch(`${BASE_URL}/users/register`, {
+                    method: 'POST',
+                    body: JSON.stringify({ name, email, password }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                let result = await response.json();
+                console.log(result);
+                if (result.auth && result.data) {
+                    localStorage.setItem("user", JSON.stringify(result.data));
+                    localStorage.setItem("token", JSON.stringify(result.auth));
+                    navigate('/');
+                } else {
+                    throw new Error("Invalid response structure");
+                }
             }
         } catch (error) {
             console.error("There was an error with the fetch operation:", error);
@@ -44,33 +53,10 @@ const SignUp = () => {
         }
     };
 
-    // const handleGoogleLogin = async() => {
-    //     window.open("http://localhost:5000/auth/google", "_self");
-    // };
-    
-    // const handleNavigate = () => {
-    //     console.log("Navigating to home1");
-    //     navigate('/'); 
-    // };
-    
-    // useEffect(() => {
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     const token = urlParams.get('token');
-    //     console.log("URL Params:", urlParams);
-    //     console.log("Token:", token);
-    //     if (token) {
-    //         localStorage.setItem("token", token);
-    //         console.log("Token saved to localStorage:", token);
-    //         handleNavigate()
-    //         console.log("Navigating to home");
-    //     }
-    // }, [navigate]); 
-
-
     return (
         <div className="formContainer">
             <div className="form">
-                <h1>Register</h1>
+                <h1>SignUp</h1>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                     <CustomTextField
                         label="Enter Name"
@@ -85,11 +71,11 @@ const SignUp = () => {
                             marginTop: '1rem',
                             '& .MuiOutlinedInput-root': {
                                 '&.Mui-focused fieldset': {
-                                    borderColor: 'red',
+                                    borderColor: '#2C3E50',
                                 },
                             },
                             '& .MuiInputLabel-root.Mui-focused': {
-                                color: 'red',
+                                color: '#2C3E50',
                             },
                         }} 
                         variant="outlined" 
@@ -105,12 +91,9 @@ const SignUp = () => {
                         />
                     </FormControl>
                 </div>
-                <div style={{ marginTop: '2rem' }}>
-                    <CustomLoadingButton size="medium" color="darkred" onClick={collectData}>SignUp</CustomLoadingButton>
+                <div style={{ display:'flex', flexDirection:'column',alignItems: 'center', marginTop:  '2rem'}}>
+                    <CustomLoadingButton size="medium" color='#18BC9C' onClick={collectData} width='200px'>SignUp</CustomLoadingButton>
                 </div>
-                {/* <div style={{ marginTop: '2rem' }}>
-                    <CustomLoadingButton size="medium" color="darkred" onClick={handleGoogleLogin}>SignUp with Google</CustomLoadingButton>
-                </div> */}
             </div>
         </div>
     );

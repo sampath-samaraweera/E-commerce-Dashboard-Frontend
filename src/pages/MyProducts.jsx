@@ -32,6 +32,7 @@ const MyProducts = () => {
 
     const getMyProducts = async () => {
         const user = JSON.parse(localStorage.getItem('user'));
+        console.log("user is",user);
         console.log("user id is",user._id);
         setLoading(true);
         try {
@@ -88,7 +89,7 @@ const MyProducts = () => {
     return (
         <div className="content">
             <div className="headerRow">
-                <span style={{ fontSize: "25px" }}>My Product List</span>
+                <span style={{ fontSize: "25px", paddingLeft:'50px' }}>My Product List</span>
                 <SearchBar onSearch={searchHandle}/>
                 <div style={{ margin: "10px" }}>
                     <CustomButton size="small" color="green" onClick={() =>  navigate('/add_my_product')}>Add Product</CustomButton>
@@ -100,7 +101,13 @@ const MyProducts = () => {
                         <CircularProgress />
                     </div>
                 ) : (
-                    <MyProductList products={products} getMyProducts={getMyProducts} />
+                    products.length === 0 ?(
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <p style={{ fontSize: "23px", marginTop: '10px' }}>No products found.</p>
+                        </div>
+                    ):(
+                        <MyProductList products={products} getMyProducts={getMyProducts} />
+                    )
                 )}
             </div>
         </div>

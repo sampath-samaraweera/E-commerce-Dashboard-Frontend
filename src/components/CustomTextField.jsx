@@ -9,11 +9,11 @@ const CustomTextField = ({ label, value, onChange }) => {
         marginTop: '1rem',
         '& .MuiOutlinedInput-root': {
           '&.Mui-focused fieldset': {
-            borderColor: 'red', // border color when focused
+            borderColor: '#2C3E50', // border color when focused
           },
         },
         '& .MuiInputLabel-root.Mui-focused': {
-          color: 'red', // label color when focused
+          color: '#2C3E50', // label color when focused
         },
       }}
       size="small"

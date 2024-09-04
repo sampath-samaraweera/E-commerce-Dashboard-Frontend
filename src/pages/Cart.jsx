@@ -1,53 +1,53 @@
 import React from 'react';
 import { useCustomContext } from '../context/CustomContext';
 import CartItem from '../components/CartItem';
+import '../styles/Cart.css'
 
 const Cart = () => {
-    const { cart, clearCart } = useCustomContext();
+    const { cart, clearCart, updateCartItemQuantity } = useCustomContext();
 
     const subTotalCal = () => {
-        let subTotal = 0;
-        if (cart.length > 0) {
-          cart.forEach((product) => {
-            subTotal += product.price * product.quantity;
-          });
-        }
-        return subTotal;
+        return cart.reduce((total, product) => total + product.price * product.quantity, 0);
     };
 
     const totalCal = () => {
         return subTotalCal() + 350;
     };
 
+    const handleRemoveItem = (product) => {
+        if (product.quantity > 1) {
+            updateCartItemQuantity(product._id, product.quantity - 1);
+        } else {
+            updateCartItemQuantity(product._id, 0); // Removes the item entirely
+        }
+    };
+
     return (
-        <div className="content">
-            <div className="headerRow">
-                <span style={{ fontSize: "25px" }}>Shopping Cart</span>
-                
+        <div className="cart-content">
+            <div className="cart-header-row">
+                <span className="cart-title">Shopping Cart</span>
                 {cart.length > 0 && 
-                    <div style={{ margin: "10px" }}>
-                        <button className="item-button" onClick={clearCart}>Clear Cart</button>
-                    </div>
+                    <button className="clear-cart-button" onClick={clearCart}>Clear Cart</button>
                 }
             </div>
             {cart.length === 0 ? (
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <p style={{ fontSize: "23px", marginTop: '10px' }}>Your cart is empty</p>
+                <div className="empty-cart">
+                    <p>Your cart is empty</p>
                 </div>
             ) : (
-                <div style={{display: 'flex'}}>
-                    <div style={{display: 'flex', flex: 2,}}>
-                            <ul style={{display: 'flex', flexDirection: 'column'}} type="none">
-                                {cart.map((product) => (
-                                    <li key={product._id}>
-                                        <CartItem product={product}/>
-                                    </li>
-                                ))}
-                            </ul>           
-                    </div>
-                    <div style={{display: 'flex', flex: 1,flexDirection: 'column', marginRight: '30px'}}>
+                <div className="cart-body">
+                    <ul className="cart-items-list">
+                        {cart.map((product) => (
+                            <CartItem 
+                                key={product._id} 
+                                product={product} 
+                                onRemove={() => handleRemoveItem(product)} 
+                            />
+                        ))}
+                    </ul>           
+                    <div className="order-summary">
                         <div className="order-summary-container">
-                            <span style={{ fontSize: "23px" }}>Order Summary</span>
+                            <span className="order-summary-title">Order Summary</span>
                             <div className="order-summary-row">
                                 <span>Subtotal</span>
                                 <span>Rs. {subTotalCal()}</span>
@@ -56,14 +56,14 @@ const Cart = () => {
                                 <span>Shipping Fee</span>
                                 <span>Rs. 350</span>
                             </div>
-                            <div className="order-summary-row">
+                            <div className="order-summary-row order-total">
                                 <span>Total</span>
                                 <span>Rs. {totalCal()}</span>
                             </div>
                         </div>           
                     </div>
                 </div>
-            )}         
+            )}
         </div>
     );
 };

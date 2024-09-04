@@ -9,6 +9,7 @@ const MyProductList = ({products, getMyProducts}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     
+
     const deleteProduct = async (id) => {
         setLoading(true);
         try {

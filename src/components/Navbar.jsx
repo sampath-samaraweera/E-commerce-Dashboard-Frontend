@@ -3,20 +3,21 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar';
 import { useCustomContext } from '../context/CustomContext';
 import { BASE_URL } from '../config';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CustomButton from './CustomButton';
+import { useState } from 'react';
 
 export default function NavBar() {    
   const { setProducts } = useCustomContext();
   const auth = localStorage.getItem('token');
   const navigate = useNavigate();
   const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const logout = () => {
     localStorage.clear();
@@ -30,84 +31,70 @@ export default function NavBar() {
     const now = Math.floor(Date.now() / 1000); // Current time in seconds
     return now >= expiry;
   };
-  // console.log('auth', auth )
-  // console.log('expire', isTokenExpired(auth) )
+
   const searchHandle = async (event) => {
     const key = event.target.value;
     if (key) {
-        try {
-          const response = await fetch(`${BASE_URL}/products/search/${key}`, {
-              headers: {
-                  "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-              }
-          });
-
-          if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
+      try {
+        const response = await fetch(`${BASE_URL}/products/search/${key}`, {
+          headers: {
+            "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
           }
+        });
 
-          const result = await response.json();
-          if (result) {
-              setProducts(result.data);
-          }
-        } catch (error) {
-            console.error('Failed to search products:', error);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const result = await response.json();
+        if (result) {
+          setProducts(result.data);
+        }
+      } catch (error) {
+        console.error('Failed to search products:', error);
+      }
     }
   };
 
-  
-
   return (
     <Box className='tabBar'>
-      <AppBar position="static" color="transparent">
-        <Box sx={{ display: 'flex', flexDirection: 'row',justifyContent: 'space-between', marginInline: 3 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
+      <AppBar position="static" sx={{ backgroundColor: '#2C3E50', color: '#ECF0F1' }} elevation={0}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px' }}>
+          {/* Logo Section */}
+          <Typography variant="h5" sx={{ paddingLeft: '10px', fontWeight: 'bold', color: '#ECF0F1' }}>
+            Tech Store
+          </Typography>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {location.pathname === '/' && (
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end',alignItems: 'flex-end', marginRight: 3}}>
+                <SearchBar onSearch={searchHandle} />
+              </Box>
+            )}
+            <CustomButton onClick={() => navigate("/")} color="#2C3E50">
+              Home
+            </CustomButton>
+            <CustomButton onClick={() => navigate("/my_products")} color="#2C3E50">
+              My Products
+            </CustomButton>
+            <IconButton color="inherit" onClick={() => navigate('/cart')} sx={{ color: '#ECF0F1' }}>
+              <ShoppingCartIcon />
             </IconButton>
-            <Typography variant="h5" sx={{ paddingLeft: '10px' }}>
-              Tech Store
-            </Typography>
+            {location.pathname === '/login' ? (
+              <CustomButton onClick={() => navigate('/signup')} color="#18BC9C">
+                SignUp
+              </CustomButton>
+            ) : location.pathname === '/signup' ? (
+              <CustomButton onClick={() => navigate('/login')} color="#18BC9C">
+                LogIn
+              </CustomButton>
+            ) : auth && !isTokenExpired(auth)?(
+              <CustomButton onClick={logout} color="#E74C3C">
+                LogOut
+              </CustomButton>
+            ):(null)}
           </Box>
-          {auth && !isTokenExpired(auth) ? (
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              {location.pathname === '/' && (
-                <Toolbar className="appBarButton">
-                  <SearchBar onSearch={searchHandle} />
-                </Toolbar>
-              )}
-              <div className="appBarButton">
-                <button className="navButton"  onClick={() => navigate("/")}>Home</button>
-              </div>
-              <div className="appBarButton">
-                <button className="navButton"  onClick={() => navigate("/my_products")}>My Products</button>
-              </div>
-              <div className="appBarButton">
-                <button className="navButton" onClick={logout}>Logout</button>
-              </div>
-              <div className="appBarButton">
-                <button className="navButton" onClick={() => navigate('/cart')}>
-                   <ShoppingCartIcon/>
-                </button>
-              </div>
-            </Box>
-          ) : (
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <div className="appBarButton">
-                <button className="navButton" onClick={() => navigate('/signup')}>Signup</button>
-              </div>
-              <div className="appBarButton">
-                <button className="navButton" onClick={() => navigate('/login')}>Login</button>
-              </div>
-            </Box>
-          )}
-        </Box>
+        </Toolbar>
       </AppBar>
     </Box>
   );

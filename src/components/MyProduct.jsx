@@ -12,8 +12,9 @@ const MyProduct = ({ product, deleteProduct, updateProduct }) => {
         <h2 className="product-name">{product.company} {product.name}</h2>
         <p className="product-price">Rs. {product.price}</p>
         <div style={{ display: "flex", flexDirection: 'row', justifyContent:'center', gap: "10px" }}>
-          <CustomButton size="small" color="green" onClick={() => updateProduct(product)}>Update</CustomButton>
-          <CustomButton size="small" color="red" onClick={() => deleteProduct(product._id)}>Delete</CustomButton>
+          
+          <button className="product-button" onClick={() => updateProduct(product)}>Update</button>
+          <button className="product-button-delete" onClick={() => deleteProduct(product._id)}>Delete</button>
         </div>
       </div>
   );

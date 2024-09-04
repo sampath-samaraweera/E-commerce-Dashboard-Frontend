@@ -94,7 +94,7 @@ const UpdateProduct = () => {
     return (
             <div className="productContainer">
                 <div className="product">
-                    <h1>Update Product</h1>
+                    <h1 style={{fontSize: '30px'}}>Update Product</h1>
                     <div className="productRow">
                         {image ? (  
                             <div className="imgField">    
@@ -106,7 +106,7 @@ const UpdateProduct = () => {
                                 <div style={{marginTop: '50px'}}>
                                     <CustomLoadingButton size="medium" color="green" onClick={() => setImage(null)}>
                                         Change Image
-                                    </CustomLoadingButton>   
+                                    </CustomLoadingButton>
                                 </div>
                             </div>
                         ):(
