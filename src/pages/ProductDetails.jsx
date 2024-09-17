@@ -15,6 +15,7 @@ const ProductDetails = () => {
         for (let i = 0; i < quantity; i++) {
             addToCart(product);
         }
+        alert("Added " + quantity + " "+ product.company +" "+product.name + ' devices' + ' to cart');
         navigate('/');
     };
 

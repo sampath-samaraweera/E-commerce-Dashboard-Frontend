@@ -75,6 +75,7 @@ const UpdateProduct = () => {
             let result = await response.json();
             console.log(result);
             if (result.success) {
+                alert('Item updated successfully')
                 navigate('/my_products');
             } else {
                 throw new Error("Invalid response structure");

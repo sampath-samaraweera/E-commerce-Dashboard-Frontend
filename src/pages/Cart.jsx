@@ -2,6 +2,8 @@ import React from 'react';
 import { useCustomContext } from '../context/CustomContext';
 import CartItem from '../components/CartItem';
 import '../styles/Cart.css'
+import {loadStripe} from '@stripe/stripe-js';
+import { BASE_URL } from '../config';
 
 const Cart = () => {
     const { cart, clearCart, updateCartItemQuantity } = useCustomContext();
@@ -21,6 +23,30 @@ const Cart = () => {
             updateCartItemQuantity(product._id, 0); // Removes the item entirely
         }
     };
+    
+    const makePayment = async ()  => {
+        console.log('press checkout');
+        console.log(cart);
+        const stripe = await loadStripe('pk_test_51Q07OvEQopSzV9Z8700G81lhGZzTuUcYh9EIZzpOlUZPl3T5G4hNtTcyaoSV2n6vV9Puidty8UG6Nd2CCoN2aew300fbAZygyj'); 
+        
+        const response = await fetch(`${BASE_URL}/products/checkout`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cart)
+        })
+
+        const session = await response.json();
+
+        const result = stripe.redirectToCheckout({
+            sessionId: session.id
+        });
+
+        if (result.error){
+            console.log(result.error);
+        }
+    }
 
     return (
         <div className="cart-content">
@@ -60,6 +86,7 @@ const Cart = () => {
                                 <span>Total</span>
                                 <span>Rs. {totalCal()}</span>
                             </div>
+                            <button className="product-button" onClick={makePayment}>Checkout</button>
                         </div>           
                     </div>
                 </div>
