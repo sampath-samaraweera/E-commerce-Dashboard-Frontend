@@ -13,7 +13,7 @@ const MyProductList = ({products, getMyProducts}) => {
     const deleteProduct = async (id) => {
         setLoading(true);
         try {
-            let response = await fetch(`${BASE_URL}/products/product/${id}`, {
+            const response = await fetch(`${BASE_URL}/products/product/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -26,6 +26,7 @@ const MyProductList = ({products, getMyProducts}) => {
 
             let result = await response.json();
             console.log("deleted");
+            alert('Item deleted successfully')
             if (result) {
                 getMyProducts();
             }

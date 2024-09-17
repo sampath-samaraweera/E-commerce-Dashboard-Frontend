@@ -7,7 +7,7 @@ import { GitHub, LinkedIn, Twitter } from '@mui/icons-material';
 
 export default function Footer() {    
   return (
-    <Box className='footer' sx={{ backgroundColor: '#2C3E50', color: '#ECF0F1', padding: '20px 0' }}>
+    <Box className='footer' sx={{backgroundColor: '#2C3E50', color: '#ECF0F1', padding: '20px 0', marginTop: "50px" }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
         {/* Branding */}
         <Typography variant="h6" sx={{ fontWeight: 700, color: '#ECF0F1' }}>

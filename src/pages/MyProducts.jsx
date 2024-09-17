@@ -97,7 +97,7 @@ const MyProducts = () => {
             </div>
             <div>
                 {loading ? (
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px', alignItems:"baseline" }}>
                         <CircularProgress />
                     </div>
                 ) : (
