@@ -52,6 +52,7 @@ const Login = () => {
                 if (result.auth && result.data) {
                     localStorage.setItem('user', JSON.stringify(result.data));
                     localStorage.setItem('token', JSON.stringify(result.auth));
+                    alert("Login successful");
                     navigate("/")
                 } else {
                     alert("Login details incorrect.")
@@ -84,9 +85,10 @@ const Login = () => {
     return (
         <div className="formContainer">
             <div className="form">
-                <h1>LogIn</h1>
+                <h1>Login</h1>
                 <div className="form-fields">
                     <CustomTextField
+                        className="password-field" 
                         label="Enter Email"
                         value={email} onChange={(e) => setEmail(e.target.value)}
                     />
@@ -113,7 +115,7 @@ const Login = () => {
                         loading={loading} 
                         width='200px'
                     >
-                        LogIn
+                        Login
                     </CustomLoadingButton>
                     <OutlinedLoadingButton 
                         size="medium" 
@@ -121,8 +123,14 @@ const Login = () => {
                         onClick={handleGoogleLogin} 
                         width='200px'
                     >
-                       <Google/>&nbsp;LogIn with Google
+                       <Google/>&nbsp;Login with Google
                     </OutlinedLoadingButton>
+                    <div style={{display:'flex', gap:'10px'}}>
+                        <span style={{ fontSize: '15px', color: '#2C3E50' }}>Don't have an account?</span>
+                        <span className='sign-up-link' onClick={() => navigate('/signup')} >
+                                SignUp
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

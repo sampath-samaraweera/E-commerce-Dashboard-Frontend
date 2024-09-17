@@ -42,6 +42,7 @@ const SignUp = () => {
                 if (result.auth && result.data) {
                     localStorage.setItem("user", JSON.stringify(result.data));
                     localStorage.setItem("token", JSON.stringify(result.auth));
+                    alert("Your account has been created successfully");
                     navigate('/');
                 } else {
                     throw new Error("Invalid response structure");
@@ -57,7 +58,7 @@ const SignUp = () => {
         <div className="formContainer">
             <div className="form">
                 <h1>SignUp</h1>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '15px' }}>
                     <CustomTextField
                         label="Enter Name"
                         value={name} onChange={(e) => setName(e.target.value)}
@@ -66,33 +67,29 @@ const SignUp = () => {
                         label="Enter Email"
                         value={email} onChange={(e) => setEmail(e.target.value)}
                     />
-                    <FormControl sx={{
-                            width: '25rem',
-                            marginTop: '1rem',
-                            '& .MuiOutlinedInput-root': {
-                                '&.Mui-focused fieldset': {
-                                    borderColor: '#2C3E50',
-                                },
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: '#2C3E50',
-                            },
-                        }} 
+                    <FormControl 
+                        className="password-field" 
                         variant="outlined" 
-                        size="small"
+                        size="small" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
                     >
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
+                            type='password'
                             label="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </FormControl>
                 </div>
-                <div style={{ display:'flex', flexDirection:'column',alignItems: 'center', marginTop:  '2rem'}}>
+                <div className="form-actions">
                     <CustomLoadingButton size="medium" color='#18BC9C' onClick={collectData} width='200px'>SignUp</CustomLoadingButton>
+                    <div style={{display:'flex', gap:'10px'}}>
+                        <span style={{ fontSize: '15px', color: '#2C3E50' }}>Already have an account?</span>
+                        <span className='sign-up-link' onClick={() => navigate('/login')} >
+                                Login
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>

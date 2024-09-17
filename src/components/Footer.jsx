@@ -19,13 +19,13 @@ export default function Footer() {
 
         {/* Additional Links or Information */}
         <Box sx={{ display: 'flex', gap: 2, marginTop: 2 }}>
-          <Link href="#" underline="hover" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
+          <Link href="#" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
             About Us
           </Link>
-          <Link href="#" underline="hover" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
+          <Link href="#" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
             Contact
           </Link>
-          <Link href="#" underline="hover" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
+          <Link href="#" sx={{ color: '#ECF0F1', fontSize: '0.9rem' }}>
             Privacy Policy
           </Link>
         </Box>

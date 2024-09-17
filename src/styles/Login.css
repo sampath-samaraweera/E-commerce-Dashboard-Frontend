@@ -10,26 +10,27 @@
 
 .form {
     background-color: #ffffff;
-    padding-bottom: 4rem;
+    padding-bottom: 3rem;
     padding-right: 4rem;
     padding-left: 4rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     text-align: center;
 }
 
 h1 {
     color: #2C3E50; /* Dark Gray */
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 0;
 }
 
 .form-fields {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 15px;
 }
 
 .password-field {
@@ -44,10 +45,22 @@ h1 {
     color: #2C3E50; /* Coral Red */
 }
 
-.form-actions {
+.form-actions {    
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-top: 3rem;
+    gap: 10px;
+    margin-top: 2rem;
+}
+
+.sign-up-link {
+    font-size: 15px;
+    font-weight: bold;
+    color: #18BC9C;
+    cursor: pointer;
+    transition: color 0.3s ease, color 0.3s ease;
+}
+
+.sign-up-link:hover {
+    color: #2C3E50;
 }
