@@ -5,11 +5,16 @@ import ProductList from '../components/ProductList';
 import { BASE_URL } from '../config';
 import ImageSlider from '../components/ImageSlider';
 import { useCustomContext } from '../context/CustomContext';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const Home = () => {
-    const {products, setProducts} = useCustomContext()
+    const {products, setProducts, open, setOpen, snackPack, setSnackPack} = useCustomContext()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+
+    const [messageInfo, setMessageInfo] = useState(undefined);
 
     useEffect(() => {
         const auth = localStorage.getItem('token');
@@ -54,8 +59,50 @@ const Home = () => {
         }
     };
 
+    useEffect(() => {
+        if (snackPack.length && !messageInfo) {
+          // Set a new snack when we don't have an active one
+          setMessageInfo({ ...snackPack[0] });
+          setSnackPack((prev) => prev.slice(1));
+          setOpen(true);
+        } else if (snackPack.length && messageInfo && open) {
+          // Close an active snack when a new one is added
+          setOpen(false);
+        }
+    }, [snackPack, messageInfo, open]);
+
+    const handleExited = () => {
+    setMessageInfo(undefined);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          setOpen(false);
+          return;
+        }
+        setOpen(false);
+      };
+
     return (
         <div className="content" style={{marginBottom: '100px'}}>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                key={messageInfo ? messageInfo.key : undefined}
+                open={open}
+                autoHideDuration={1500}
+                onClose={handleClose}
+                TransitionProps={{ onExited: handleExited }}
+                message={messageInfo ? messageInfo.message : undefined}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%', color: 'white' }}
+                >
+                    {messageInfo ? messageInfo.message : undefined}
+                </Alert>
+            </Snackbar>
             <ImageSlider/>
             <div style={{display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
                 <span style={{ fontSize: "25px" }}>Products</span>

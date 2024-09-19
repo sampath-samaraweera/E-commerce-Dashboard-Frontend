@@ -6,6 +6,7 @@ import CustomMultilineTextField from '../components/CustomMultilineTextField';
 import CustomLoadingButton from "../components/CustomLoadingButton";
 import FileUploadCom from "../components/FileUpload/FileUploadCom";
 import { BASE_URL } from '../config';
+import { useCustomContext } from '../context/CustomContext';
 
 const UpdateProduct = () => {
     const [name, setName] = useState("");
@@ -19,6 +20,8 @@ const UpdateProduct = () => {
     const navigate = useNavigate();
     const params = useParams();
     console.log("params", params)
+    
+    const { setOpen, setMessage} = useCustomContext();
 
     useEffect(() => {
         getProductDetails();
@@ -75,8 +78,9 @@ const UpdateProduct = () => {
             let result = await response.json();
             console.log(result);
             if (result.success) {
-                alert('Item updated successfully')
                 navigate('/my_products');
+                setMessage("Item updated successfully")
+                setOpen(true);
             } else {
                 throw new Error("Invalid response structure");
             }
@@ -93,7 +97,7 @@ const UpdateProduct = () => {
     };
 
     return (
-            <div className="productContainer">
+            <div className="productContainer">            
                 <div className="product">
                     <h1 style={{fontSize: '30px'}}>Update Product</h1>
                     <div className="productRow">
@@ -117,6 +121,10 @@ const UpdateProduct = () => {
                         )} 
                         <div className="inputFieldSet">
                             <CustomTextField
+                                label="Enter Category"
+                                value={category} onChange={(e) => setCategory(e.target.value)}
+                            />
+                            <CustomTextField
                                 label="Enter Company Name"
                                 value={company} onChange={(e) => setCompany(e.target.value)}
                             />
@@ -126,11 +134,14 @@ const UpdateProduct = () => {
                             />
                             <CustomTextField
                                 label="Enter Price"
-                                value={price} onChange={(e) => setPrice(e.target.value)}
-                            />
-                            <CustomTextField
-                                label="Enter Category"
-                                value={category} onChange={(e) => setCategory(e.target.value)}
+                                value={price} 
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Allow only numeric input, and ensure it doesn't include unwanted characters
+                                    if (!isNaN(value) && /^[0-9]*\.?[0-9]*$/.test(value)) {
+                                      setPrice(value);
+                                    }
+                                }}
                             />
                             <CustomMultilineTextField
                                 label="Enter Description"

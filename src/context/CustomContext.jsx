@@ -6,6 +6,9 @@ export const CustomProvider = ({ children }) => {
 
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [snackPack, setSnackPack] = useState([]);
+  const [message, setMessage] = useState('');
 
   const addToCart = (product) => {
     setCart((prevCart) => {
@@ -22,6 +25,7 @@ export const CustomProvider = ({ children }) => {
   };
 
   const clearCart = () => {
+    setOpen(true)
     setCart([]);
   };
 
@@ -45,7 +49,13 @@ export const CustomProvider = ({ children }) => {
         addToCart,
         setCart,
         updateCartItemQuantity,
-        clearCart
+        clearCart,
+        open,
+        setOpen,
+        snackPack,
+        setSnackPack,
+        message,
+        setMessage
       }}
     >
       {children}
