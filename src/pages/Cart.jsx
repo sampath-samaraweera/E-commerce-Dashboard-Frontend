@@ -4,9 +4,11 @@ import CartItem from '../components/CartItem';
 import '../styles/Cart.css'
 import {loadStripe} from '@stripe/stripe-js';
 import { BASE_URL } from '../config';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const Cart = () => {
-    const { cart, clearCart, updateCartItemQuantity } = useCustomContext();
+    const { cart, clearCart, updateCartItemQuantity, open, setOpen} = useCustomContext();
 
     const subTotalCal = () => {
         return cart.reduce((total, product) => total + product.price * product.quantity, 0);
@@ -47,9 +49,31 @@ const Cart = () => {
             console.log(result.error);
         }
     }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          setOpen(false);
+          return;
+        }
+        setOpen(false);
+      };
 
     return (
         <div className="cart-content">
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={open}
+                autoHideDuration={1500}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' ,color: 'white' }}
+                >
+                    Cart Cleared Successfully!
+                </Alert>
+            </Snackbar>
             <div className="cart-header-row">
                 <span className="cart-title">Shopping Cart</span>
                 {cart.length > 0 && 

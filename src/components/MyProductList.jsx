@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/ProductList.css';
 import { BASE_URL } from '../config';
 import {  CircularProgress } from '@mui/material';
+import { useCustomContext } from '../context/CustomContext';
 
 const MyProductList = ({products, getMyProducts}) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     
+    const { setOpen, setMessage} = useCustomContext();
 
     const deleteProduct = async (id) => {
         setLoading(true);
@@ -25,8 +27,9 @@ const MyProductList = ({products, getMyProducts}) => {
             }
 
             let result = await response.json();
-            console.log("deleted");
-            alert('Item deleted successfully')
+            console.log("deleted");                
+            setMessage("Item deleted successfully")
+            setOpen(true);
             if (result) {
                 getMyProducts();
             }

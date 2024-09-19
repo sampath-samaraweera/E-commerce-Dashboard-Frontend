@@ -5,6 +5,7 @@ import CustomMultilineTextField from '../components/CustomMultilineTextField';
 import CustomLoadingButton from "../components/CustomLoadingButton";
 import FileUploadCom from "../components/FileUpload/FileUploadCom";
 import { BASE_URL } from '../config';
+import { useCustomContext } from '../context/CustomContext';
 
 const AddProduct = () => {
     const [name, setName] = useState("");
@@ -15,6 +16,8 @@ const AddProduct = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const { setOpen, setMessage} = useCustomContext();
     
     useEffect(() => {        
         const auth = localStorage.getItem('token');
@@ -55,7 +58,7 @@ const AddProduct = () => {
             }else if(!name) {
                 alert("Please select Product Name")
             }else if(!price) {
-                alert("Please enter price")
+                alert("Please enter price. Price must be a number")
             }
             let response = await fetch(`${BASE_URL}/products/add-product`, {
                 method: 'POST',
@@ -74,6 +77,8 @@ const AddProduct = () => {
 
             if (result.success) {
                 setLoading(false);
+                setMessage("Item added successfully")
+                setOpen(true);
                 navigate('/my_products');
             } else {
                 throw new Error("Invalid response structure");
@@ -113,7 +118,14 @@ const AddProduct = () => {
                             />
                             <CustomTextField
                                 label="Enter Price"
-                                value={price} onChange={(e) => setPrice(e.target.value)}
+                                value={price} 
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Allow only numeric input, and ensure it doesn't include unwanted characters
+                                    if (!isNaN(value) && /^[0-9]*\.?[0-9]*$/.test(value)) {
+                                      setPrice(value);
+                                    }
+                                }}
                             />
                             <CustomMultilineTextField
                                 label="Enter Description"

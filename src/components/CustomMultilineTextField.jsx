@@ -6,7 +6,6 @@ const CustomMultilineTextField = ({ label, value, onChange }) => {
     <TextField
       sx={{
         width: '25rem',
-        marginTop: '1rem',
         '& .MuiOutlinedInput-root': {
           '&.Mui-focused fieldset': {
             borderColor: '#2C3E50', // border color when focused

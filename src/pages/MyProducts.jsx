@@ -5,12 +5,17 @@ import MyProductList from '../components/MyProductList';
 import { BASE_URL } from '../config';
 import CustomButton from "../components/CustomButton";
 import SearchBar from '../components/SearchBar';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { useCustomContext } from '../context/CustomContext';
 
 const MyProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const auth = localStorage.getItem('token');
     const navigate = useNavigate();
+
+    const { open, setOpen, message} = useCustomContext();
 
     useEffect(() => {        
         if (auth && !isTokenExpired(auth)) {
@@ -85,9 +90,31 @@ const MyProducts = () => {
             getMyProducts();
         }
     };
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          setOpen(false);
+          return;
+        }
+        setOpen(false);
+    };
 
     return (
         <div className="content">
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                open={open}
+                autoHideDuration={1500}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' ,color: 'white' }}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
             <div className="headerRow">
                 <span style={{ fontSize: "25px", paddingLeft:'50px' }}>My Product List</span>
                 <SearchBar onSearch={searchHandle}/>
@@ -106,7 +133,7 @@ const MyProducts = () => {
                             <p style={{ fontSize: "23px", marginTop: '10px' }}>No products found.</p>
                         </div>
                     ):(
-                        <MyProductList products={products} getMyProducts={getMyProducts} />
+                        <MyProductList products={products} getMyProducts={getMyProducts}/>
                     )
                 )}
             </div>
